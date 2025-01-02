@@ -16,7 +16,7 @@ This Python-based automation toolkit provides multiple functionalities for inter
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/rilspratama/mashchan.git
+git clone https://github.com/rilspratama/meshchan.git
 cd mashchan
 ```
 
