@@ -1,4 +1,4 @@
-# OpenLoop Automation Toolkit
+# Meshchain AI Automation Toolkit
 ![visitor](https://count.getloli.com/get/@meshchan?theme=asoul)
 ## Overview
 This Python-based automation toolkit provides multiple functionalities for interacting with the Meshchain platform, including referral generation, claim bnb.
