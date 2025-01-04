@@ -1,3 +1,4 @@
 requests
 faker
 logmagix
+fake_useragent

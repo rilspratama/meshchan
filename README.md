@@ -1,10 +1,12 @@
 # Meshchain AI Automation Toolkit
 ![visitor](https://count.getloli.com/get/@meshchan?theme=asoul)
 ## Overview
-This Python-based automation toolkit provides multiple functionalities for interacting with the Meshchain platform, including referral generation, claim bnb.
+This Python-based automation toolkit provides multiple functionalities for interacting with the Meshchain platform, including referral generation, Node extension.
+
 
 ## Features
 - Automated account referral creation
+- Automated Node extension
 - Proxy support
 
 ## Prerequisites
@@ -17,7 +19,7 @@ This Python-based automation toolkit provides multiple functionalities for inter
 1. Clone the repository:
 ```bash
 git clone https://github.com/rilspratama/meshchan.git
-cd mashchan
+cd meshchan
 ```
 
 2. Install required dependencies:
@@ -28,10 +30,17 @@ pip install -r requirements.txt
 ## Usage
 
 ### Main Menu
-Run the main script to access different automation modules:
+Run the script to access different automation modules:
+
+**Refferal Tool**
 ```bash
 python refferal.py
 ```
+**Node extension tool**
+```bash
+python node.py
+```
+
 
 ### Modules
 
@@ -40,6 +49,11 @@ python refferal.py
 - Option to use proxies
 - Automatically save created accounts
 
+#### 2. Node extension Module
+- Automatically create node
+- Automatically Claim reward
+- Automatically start node cycle
+- A different thread for each account
 
 ## Configuration
 
@@ -60,10 +74,12 @@ socks5://username:password@ip:port
 ```
 
 ### Solver Captcha API
-Link : [@ivy_solver_bot](https://t.me/ivy_solver_bot)
+Link : https://turnshit.biz.id
+
+TG Bot : [@ivy_solver_bot](https://t.me/ivy_solver_bot)
 
 ## Important Notes
-- Use responsibly and ensure compliance with OpenLoop's terms of service
+- Use responsibly and ensure compliance with Meshchain's terms of service
 - Automated interactions may violate platform rules
 - Use at your own risk
 

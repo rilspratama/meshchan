@@ -5,7 +5,7 @@ import time
 import string
 import json
 import random
-from tempmail import *
+from email_otp import get_otp_from_email
 from logmagix import Logger,Home,LogLevel
 
 
@@ -22,8 +22,9 @@ fake = Faker()
 def generate_random_name():
     return fake.name()
 
-def generate_email(uname,domain):
-    return f"{uname}@{domain}"
+def generate_email(email_username):
+    email = f"{email_username.replace('@gmail.com','')}+{random.randint(1,9999999999)}@gmail.com"
+    return email
     
 
 def generate_password(length=12):
@@ -116,17 +117,27 @@ def claim_bnb(res,headers):
     except Exception as e:
         log.critical(f"Exception >>> {e}")
 
-def process_refferal(res,reffcode,headers,account_filepath):
+
+def chech_account(account_path,email_gen):
+    try:
+        with open(account_path,"r") as file:
+            email = file.readlines()
+            for i in email:
+                email = i.split("|")
+                emailus = email[0]
+                if emailus == email_gen:
+                    return True
+            return False
+    except FileNotFoundError:
+        return False
+
+def process_refferal(res,reffcode,headers,account_filepath,email,email_username,email_password):
     log.info("Starting the registration process")
     name = generate_random_name()
-    domains = get_domains()
-    random_domain = random.choice(domains)
-    username = f"{fake.user_name()}{random.randint(100,9999)}"
-    email = f"{generate_email(username,random_domain)}"
     password = generate_password()
+    
     log.info(f"Using email >>> {email}")
     log.info("Registration  email.")
-    create_email(email,password)
     time.sleep(5)
     log.info("Creating account to platform...")
     refferal(res,name,email,password,reffcode,headers)
@@ -136,11 +147,9 @@ def process_refferal(res,reffcode,headers,account_filepath):
     log.info("Login success!!!")
     log.info("Verifying account...")
     log.info("Logging in email...")
-    email_ac = get_token(email,password)
-    id_email = get_latest_message(email_ac)
-    text_email = get_message(email_ac,id_email)
-    otp = get_otp(text_email)
     headers["Authorization"] = f"Bearer {access_token}"
+    otp = get_otp_from_email(email_username,email_password)
+    log.info(f"Otp >>> {otp}")
     verify_email(res,email,otp,headers)
     log.info("Email verification successful")
     log.info("Claiming 0.005 BNB Task")
@@ -158,6 +167,9 @@ def main():
     api_key = input("Enter api key turnshit(get on @ivy_solver_bot) >>> ")
     numbers_of_refferal = int(input("Numbers of refferal >>>"))
     aaccount_file_path = input("Enter the name of the account file (example: accounts.txt) >>> ")
+    email_username = input("Enter email >>> ")
+    email_password = input("Enter email password >>> ")
+    
     use_proxy = input("Do you want to use a proxy? (y/n) >>> ")
     if use_proxy.lower() == "y":
         proxy_file_name = input("Enter the name of the proxy file (example: proxy.txt) >>> ")
@@ -188,7 +200,11 @@ def main():
                               'priority': "u=1, i",
                               'referer': "https://app.meshchain.ai/"
                         }
-                        process_refferal(res,reffcode,headers,aaccount_file_path)
+                        email = generate_email(email_username)
+                        if chech_account(aaccount_file_path,email):
+                            log.info("This email already use, skipping...")
+                            continue
+                        process_refferal(res,reffcode,headers,aaccount_file_path,email,email_username,email_password)
                     except Exception as e:
                         log.error(f"Exception >>> {e}")
         except FileNotFoundError:
@@ -212,7 +228,11 @@ def main():
                       'priority': "u=1, i",
                       'referer': "https://app.meshchain.ai/"
                 }
-                process_refferal(res,reffcode,headers,aaccount_file_path)
+                email = generate_email(email_username)
+                if chech_account(aaccount_file_path,email):
+                    log.info("This email already use, skipping...")
+                    continue
+                process_refferal(res,reffcode,headers,aaccount_file_path,email,email_username,email_password)
             except Exception as e:
                 log.error(f"Exception >>> {e}")
     else:
