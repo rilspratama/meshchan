@@ -21,7 +21,8 @@ def get_turnstile_token():
         "url":"https://app.meshchain.ai/",
         "sitekey":"0x4AAAAAAA0e4lkIb7ZRG1LE"
     }
-    headers = {"X-API-Key":"adcfe085cb6065d543660d32bf34bac5"}
+    global api_key
+    headers = {"X-API-Key":api_key}
     while True:
         response = requests.get(f"https://turnshit.biz.id/turnstile", params=params,headers=headers)
         if response.status_code == 200 and response.json().get("status") == "success":
@@ -391,6 +392,8 @@ def main():
     home_screen.display()
     account_path = input("Enter accounts file path (exemple: accounts.txt) >>> ")
     use_proxy = input("Do you want to use a proxy? (y/n) >>> ")
+    global api_key
+    api_key = input("Enter api key turnshit(get on @ivy_solver_bot) >>> ")
     
     if use_proxy.lower() == "y":
         proxy_file_name = input("Enter the name of the proxy file (example: proxy.txt) >>> ")
