@@ -283,9 +283,9 @@ def estimate_node(res,headers,access_token,uid_node,email):
             log.error("Node not started.")
             return 234
         else:
-            log.critical(f"[{email}]Error from server >>> {response.status_code}")
+            log.error(f"[{email}]Error from server >>> {response.status_code}")
     except Exception as e:
-        log.critical(f"[{email}]Failed to estimate node. >>> {e}")
+        log.error(f"[{email}]Failed to estimate node. >>> {e}")
 
 def user_profile(res,headers,access_token,email):
     headers["authorization"] = f"Bearer {access_token}"
@@ -299,9 +299,9 @@ def user_profile(res,headers,access_token,email):
             log.error("Failed to login access token expired.")
             return 123
         else:
-            log.critical(f"Failedt to logn from server >>> {response.status_code}")
+            log.error(f"Failedt to logn from server >>> {response.status_code}")
     except Exception as e:
-        log.critical(f"Failed to login[Exception] >>> {e}")
+        log.error(f"Failed to login[Exception] >>> {e}")
 
 def process_account(email,password,proxy_selected):
     headers = {
